@@ -33,21 +33,25 @@ public class AtosApplication {
 	}
 	List<User> list=new ArrayList<>();
 	@PostMapping(value="/user",consumes = "application/json", produces = "application/json")
-	public ResponseEntity<User> postUser(@RequestBody String user) throws JsonParseException, JsonMappingException, IOException{
+	public ResponseEntity<User> postUser(/*@RequestBody User user,*/@RequestBody String user1) throws JsonParseException, JsonMappingException, IOException{
 		
 		/*ObjectMapper mapper=new ObjectMapper();
 	User user2=	mapper.readValue(user, User.class);
 	li
 	
-*/	User e= service.getuser(user);
+*/	
 		
-		list.add(e);
+	// to another service to get response as json string;
+		ResponseEntity<String> response=getuser();
+		String responseString=response.getBody();
+	User e= service.getuser(responseString);
+				list.add(e);
 		return ResponseEntity.ok(e);
 	}
 	
 	@GetMapping("/allusers")
-	public  List<User> getuser() {
-		return null;
+	public  ResponseEntity<String> getuser() {
+		return ResponseEntity.ok( "{\"firstName\":null,\"lastName\":null,\"age\":0,\"phone\":null,\"mobile\":null}");
 		// TODO Auto-generated method stub
 
 	}

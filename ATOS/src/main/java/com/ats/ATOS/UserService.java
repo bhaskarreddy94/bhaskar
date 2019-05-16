@@ -12,10 +12,17 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class UserService {
 	
 	 ObjectMapper mapper= new ObjectMapper();
-	static String json= "{\"firstName\":\"bhaskar\",\"lastName\":\"hari\",\"address\":\"urukundu\"}";
-public   User getuser( String json) throws JsonParseException, JsonMappingException, IOException {
-	
-return mapper.readValue(json, User.class);
+	//static String json= "{\"firstName\":\"bhaskar\",\"lastName\":\"hari\",\"address\":\"urukundu\"}";
+public   User getuser( String json){
+	User user=null;
+
+	 try {
+		user= mapper.readValue(json, User.class);
+	} catch (IOException e) {
+		e.printStackTrace();
+	}
+
+return user;
 }
 
 /*public static void main(String[] args) throws JsonParseException, JsonMappingException, IOException {
