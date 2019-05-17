@@ -25,7 +25,7 @@ public class AtosApplication {
 	UserService service;
 	public static void main(String[] args) throws JsonProcessingException {
 		SpringApplication.run(AtosApplication.class, args);
-		User user=new User();
+		User user=User.builder().address("chennai").age(25).firstName("bhaskar").lastName("reddy").build();
 		ObjectMapper mapper=new ObjectMapper();
 		
 		System.out.println(mapper.writeValueAsString(user));
@@ -48,12 +48,20 @@ public class AtosApplication {
 				list.add(e);
 		return ResponseEntity.ok(e);
 	}
-	
+	@PostMapping(value="/user1",consumes = "application/json", produces = "application/json")
+	public ResponseEntity<User> postNewUser(@RequestBody User user){
+	System.out.println(user.toString());
+
+		return ResponseEntity.ok(user);
+		
+	}
 	@GetMapping("/allusers")
 	public  ResponseEntity<String> getuser() {
 		return ResponseEntity.ok( "{\"firstName\":null,\"lastName\":null,\"age\":0,\"phone\":null,\"mobile\":null}");
 		// TODO Auto-generated method stub
 
 	}
+	
+	
 
 }

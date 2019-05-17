@@ -1,8 +1,15 @@
 package com.ats.ATOS;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import lombok.Builder;
+import lombok.Data;
 
 //@JsonIgnoreProperties(ignoreUnknown=true)
+@Data
+
+
+@Builder
+
+
 public class User
 {
     //All final attributes
@@ -10,8 +17,11 @@ public class User
     private  String lastName;
     private  int age; 
     private  String phone; 
-    private  String address; 
-	public String getFirstName() {
+   
+	private  String address; 
+    
+    
+	/*public String getFirstName() {
 		return firstName;
 	}
 	public void setFirstName(String firstName) {
@@ -47,6 +57,6 @@ public class User
 				+ ", address=" + address + "]";
 	}
     
-    
+ */   
  
 }
