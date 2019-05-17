@@ -13,8 +13,9 @@ public class AtosApplicationTests {
 	public void contextLoads() {
 	}
 
-
-
+public void good()
+{
+}
 
 
 }
