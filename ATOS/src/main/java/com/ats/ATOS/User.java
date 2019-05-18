@@ -1,23 +1,29 @@
 package com.ats.ATOS;
 
-import lombok.Builder;
+import javax.persistence.Entity;
+import javax.persistence.GeneratedValue;
+import javax.persistence.GenerationType;
+import javax.persistence.Id;
+import javax.persistence.Table;
+
 import lombok.Data;
 
 //@JsonIgnoreProperties(ignoreUnknown=true)
 @Data
-
-
-@Builder
-
-
+@Table
+@Entity
 public class User
 {
     //All final attributes
-    private  String firstName; 
+    
+	@Id
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+	private long id;
+	
+	private  String firstName; 
     private  String lastName;
     private  int age; 
     private  String phone; 
-   
 	private  String address; 
     
     

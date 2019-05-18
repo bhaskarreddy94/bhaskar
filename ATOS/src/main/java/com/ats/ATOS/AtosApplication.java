@@ -2,7 +2,10 @@ package com.ats.ATOS;
 
 import java.io.IOException;
 import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
@@ -23,13 +26,14 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 public class AtosApplication {
 	@Autowired
 	UserService service;
+	@Autowired
+	UserRepository repository;
 	public static void main(String[] args) throws JsonProcessingException {
 		SpringApplication.run(AtosApplication.class, args);
-		User user=User.builder().address("chennai").age(25).firstName("bhaskar").lastName("reddy").build();
+		//User user=User.builder().address("chennai").age(25).firstName("bhaskar").lastName("reddy").build();
 		ObjectMapper mapper=new ObjectMapper();
 		
-		System.out.println(mapper.writeValueAsString(user));
-		
+				
 	}
 	List<User> list=new ArrayList<>();
 	@PostMapping(value="/user",consumes = "application/json", produces = "application/json")
@@ -51,8 +55,7 @@ public class AtosApplication {
 	@PostMapping(value="/user1",consumes = "application/json", produces = "application/json")
 	public ResponseEntity<User> postNewUser(@RequestBody User user){
 	System.out.println(user.toString());
-
-		return ResponseEntity.ok(user);
+		return ResponseEntity.ok(repository.save(user));
 		
 	}
 	@GetMapping("/allusers")
@@ -61,6 +64,23 @@ public class AtosApplication {
 		// TODO Auto-generated method stub
 
 	}
+	@GetMapping("/say")
+	public String sayWish() {
+		/* return Arrays.asList(
+				User.builder().address("indai").age(13).firstName("bhaskar").lastName("reddy").phone("9003164501")
+						.build(),
+				User.builder().address("chennai").age(13).firstName("bhaskar").lastName("reddy").phone("9003164501")
+						.build(),
+				User.builder().address("banglor").age(13).firstName("bhaskar").lastName("reddy").phone("9003164501")
+						.build(),
+				User.builder().address("krishna").age(13).firstName("bhaskar").lastName("reddy").phone("9003164501")
+						.build()).stream().filter(e->e.getAddress().equalsIgnoreCase("indai")).collect(Collectors.toList()).stream().findFirst().get().getFirstName();
+
+*/	
+	return "good day";
+	
+	}
+	
 	
 	
 
