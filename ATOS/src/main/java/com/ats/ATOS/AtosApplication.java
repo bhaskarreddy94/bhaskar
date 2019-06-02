@@ -10,10 +10,13 @@ import java.util.stream.Collectors;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.SpringApplication;
 import org.springframework.boot.autoconfigure.SpringBootApplication;
+import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.CrossOrigin;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 
 import com.fasterxml.jackson.core.JsonParseException;
@@ -23,6 +26,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 
 @SpringBootApplication
 @RestController
+@CrossOrigin
 public class AtosApplication {
 	@Autowired
 	UserService service;
@@ -35,6 +39,14 @@ public class AtosApplication {
 		
 				
 	}
+	@PostMapping(value="/pageuser",consumes=MediaType.APPLICATION_JSON_VALUE, produces=MediaType.APPLICATION_JSON_VALUE)
+	
+	public ResponseEntity<List<User>>  findByFirsName(@RequestBody PageModel pageModel,@RequestParam("firstName") String firstName){
+		return  ResponseEntity.ok(service.getUserByFirstName(firstName, pageModel));
+	}
+	
+	
+	
 	List<User> list=new ArrayList<>();
 	@PostMapping(value="/user",consumes = "application/json", produces = "application/json")
 	public ResponseEntity<User> postUser(/*@RequestBody User user,*/@RequestBody String user1) throws JsonParseException, JsonMappingException, IOException{
@@ -46,11 +58,12 @@ public class AtosApplication {
 */	
 		
 	// to another service to get response as json string;
-		ResponseEntity<String> response=getuser();
-		String responseString=response.getBody();
-	User e= service.getuser(responseString);
-				list.add(e);
-		return ResponseEntity.ok(e);
+	//	ResponseEntity<String> response=getuser();
+		//String responseString=response.getBody();
+	//User e= service.getuser(responseString);
+			//	list.add(e);
+		//return ResponseEntity.ok(e);
+		return null;
 	}
 	@PostMapping(value="/user1",consumes = "application/json", produces = "application/json")
 	public ResponseEntity<User> postNewUser(@RequestBody User user){
@@ -59,8 +72,9 @@ public class AtosApplication {
 		
 	}
 	@GetMapping("/allusers")
-	public  ResponseEntity<String> getuser() {
-		return ResponseEntity.ok( "{\"firstName\":null,\"lastName\":null,\"age\":0,\"phone\":null,\"mobile\":null}");
+	public  ResponseEntity<Iterable<User>> getuser() {
+	//	return ResponseEntity.ok( "{\"firstName\":null,\"lastName\":null,\"age\":0,\"phone\":null,\"mobile\":null}");
+		return ResponseEntity.ok(repository.findAll());
 		// TODO Auto-generated method stub
 
 	}
